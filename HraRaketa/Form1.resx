@@ -121,7 +121,7 @@
   <data name="meteorit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAKmbSURBVHhe7d0H
+        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAKmbSURBVHhe7d0H
         eBXV1jfwCyE9pJJAQgKEUEINvYcACYRepffee++IqGDFhiKoiAUVRGz3Wq69N+xdEVREvL33d79rjTde
         yh/OlD1z5pyz/s/ze77vua+cMzOZc/acmb3X+plEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKR
         SCQSiUQikUgkkhBONplFbieHyD1kB7mIzCHlpD6JJhKJRCKRSEI8PKBfSv5KlAn/JIfJLWQeaUEqE4lE
@@ -851,7 +851,7 @@
   <data name="pictureBox_raketa.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAGHaSURBVHhe7Z0H
+        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAGHaSURBVHhe7Z0H
         mBVF1oadxARghpyGHIecs+QhKVHFjDkAq2LGuLquuq5pcc0iYg6YVlBUMGdRMac1iwlFEEQy1P+da/Mv
         4gFmuqv7dvje53mf3Ufg3u7TfetUV1ed2oUQQgghoSQbFsNecDQ8BJ4E/wFvhA/C5+D78Eu4DG6Cy+En
         8Da4D8yBhBBCCAkBlWEbWAoPgmfCK+FDcCH8Fm6ExoLSGRgPCSGEEBIAtWBveCA8F94OX4Y/Qi1R++lm

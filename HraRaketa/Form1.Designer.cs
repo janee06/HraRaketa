@@ -33,11 +33,7 @@
             this.pozadi = new System.Windows.Forms.GroupBox();
             this.meteorit = new System.Windows.Forms.PictureBox();
             this.pictureBox_raketa = new System.Windows.Forms.PictureBox();
-            this.txtscore = new System.Windows.Forms.Label();
             this.txtzivoty = new System.Windows.Forms.Label();
-            this.txtpalivo = new System.Windows.Forms.Label();
-            this.Boxskore = new System.Windows.Forms.TextBox();
-            this.Boxpalivo = new System.Windows.Forms.TextBox();
             this.pictureBoxzivoty1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxzivoty2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxzivoty3 = new System.Windows.Forms.PictureBox();
@@ -63,9 +59,9 @@
             this.pozadi.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pozadi.Controls.Add(this.meteorit);
             this.pozadi.Controls.Add(this.pictureBox_raketa);
-            this.pozadi.Location = new System.Drawing.Point(12, 63);
+            this.pozadi.Location = new System.Drawing.Point(12, 47);
             this.pozadi.Name = "pozadi";
-            this.pozadi.Size = new System.Drawing.Size(837, 383);
+            this.pozadi.Size = new System.Drawing.Size(837, 399);
             this.pozadi.TabIndex = 1;
             this.pozadi.TabStop = false;
             // 
@@ -87,20 +83,10 @@
             this.pictureBox_raketa.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_raketa.Image")));
             this.pictureBox_raketa.Location = new System.Drawing.Point(409, 299);
             this.pictureBox_raketa.Name = "pictureBox_raketa";
-            this.pictureBox_raketa.Size = new System.Drawing.Size(60, 58);
+            this.pictureBox_raketa.Size = new System.Drawing.Size(60, 74);
             this.pictureBox_raketa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_raketa.TabIndex = 0;
             this.pictureBox_raketa.TabStop = false;
-            // 
-            // txtscore
-            // 
-            this.txtscore.AutoSize = true;
-            this.txtscore.Location = new System.Drawing.Point(12, 474);
-            this.txtscore.Name = "txtscore";
-            this.txtscore.Size = new System.Drawing.Size(60, 18);
-            this.txtscore.TabIndex = 3;
-            this.txtscore.Text = "Skóre:";
-            this.txtscore.Click += new System.EventHandler(this.txtscore_Click);
             // 
             // txtzivoty
             // 
@@ -110,29 +96,6 @@
             this.txtzivoty.Size = new System.Drawing.Size(60, 18);
             this.txtzivoty.TabIndex = 4;
             this.txtzivoty.Text = "Životy:";
-            // 
-            // txtpalivo
-            // 
-            this.txtpalivo.AutoSize = true;
-            this.txtpalivo.Location = new System.Drawing.Point(691, 474);
-            this.txtpalivo.Name = "txtpalivo";
-            this.txtpalivo.Size = new System.Drawing.Size(61, 18);
-            this.txtpalivo.TabIndex = 5;
-            this.txtpalivo.Text = "Palivo:";
-            // 
-            // Boxskore
-            // 
-            this.Boxskore.Location = new System.Drawing.Point(77, 471);
-            this.Boxskore.Name = "Boxskore";
-            this.Boxskore.Size = new System.Drawing.Size(100, 26);
-            this.Boxskore.TabIndex = 0;
-            // 
-            // Boxpalivo
-            // 
-            this.Boxpalivo.Location = new System.Drawing.Point(758, 471);
-            this.Boxpalivo.Name = "Boxpalivo";
-            this.Boxpalivo.Size = new System.Drawing.Size(100, 26);
-            this.Boxpalivo.TabIndex = 7;
             // 
             // pictureBoxzivoty1
             // 
@@ -168,15 +131,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 515);
+            this.ClientSize = new System.Drawing.Size(1198, 610);
             this.Controls.Add(this.pictureBoxzivoty3);
             this.Controls.Add(this.pictureBoxzivoty2);
             this.Controls.Add(this.pictureBoxzivoty1);
-            this.Controls.Add(this.Boxpalivo);
-            this.Controls.Add(this.Boxskore);
-            this.Controls.Add(this.txtpalivo);
             this.Controls.Add(this.txtzivoty);
-            this.Controls.Add(this.txtscore);
             this.Controls.Add(this.pozadi);
             this.Controls.Add(this.txtRaketa);
             this.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -197,12 +156,8 @@
 
         private System.Windows.Forms.Label txtRaketa;
         private System.Windows.Forms.GroupBox pozadi;
-        private System.Windows.Forms.Label txtscore;
         private System.Windows.Forms.Label txtzivoty;
-        private System.Windows.Forms.Label txtpalivo;
-        private System.Windows.Forms.TextBox Boxskore;
         private System.Windows.Forms.PictureBox pictureBox_raketa;
-        private System.Windows.Forms.TextBox Boxpalivo;
         private System.Windows.Forms.PictureBox meteorit;
         private System.Windows.Forms.PictureBox pictureBoxzivoty1;
         private System.Windows.Forms.PictureBox pictureBoxzivoty2;
