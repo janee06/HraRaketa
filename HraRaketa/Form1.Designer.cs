@@ -37,6 +37,8 @@
             this.pictureBoxzivoty1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxzivoty2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxzivoty3 = new System.Windows.Forms.PictureBox();
+            this.textBoxJmeno = new System.Windows.Forms.TextBox();
+            this.labelJmeno = new System.Windows.Forms.Label();
             this.pozadi.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.meteorit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_raketa)).BeginInit();
@@ -48,7 +50,7 @@
             // txtRaketa
             // 
             this.txtRaketa.AutoSize = true;
-            this.txtRaketa.Location = new System.Drawing.Point(396, 13);
+            this.txtRaketa.Location = new System.Drawing.Point(454, 16);
             this.txtRaketa.Name = "txtRaketa";
             this.txtRaketa.Size = new System.Drawing.Size(98, 18);
             this.txtRaketa.TabIndex = 0;
@@ -127,11 +129,29 @@
             this.pictureBoxzivoty3.TabIndex = 10;
             this.pictureBoxzivoty3.TabStop = false;
             // 
+            // textBoxJmeno
+            // 
+            this.textBoxJmeno.Location = new System.Drawing.Point(13, 13);
+            this.textBoxJmeno.Name = "textBoxJmeno";
+            this.textBoxJmeno.Size = new System.Drawing.Size(100, 26);
+            this.textBoxJmeno.TabIndex = 11;
+            // 
+            // labelJmeno
+            // 
+            this.labelJmeno.AutoSize = true;
+            this.labelJmeno.Location = new System.Drawing.Point(136, 13);
+            this.labelJmeno.Name = "labelJmeno";
+            this.labelJmeno.Size = new System.Drawing.Size(109, 18);
+            this.labelJmeno.TabIndex = 12;
+            this.labelJmeno.Text = "Jméno hráče";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 610);
+            this.Controls.Add(this.labelJmeno);
+            this.Controls.Add(this.textBoxJmeno);
             this.Controls.Add(this.pictureBoxzivoty3);
             this.Controls.Add(this.pictureBoxzivoty2);
             this.Controls.Add(this.pictureBoxzivoty1);
@@ -162,6 +182,8 @@
         private System.Windows.Forms.PictureBox pictureBoxzivoty1;
         private System.Windows.Forms.PictureBox pictureBoxzivoty2;
         private System.Windows.Forms.PictureBox pictureBoxzivoty3;
+        private System.Windows.Forms.TextBox textBoxJmeno;
+        private System.Windows.Forms.Label labelJmeno;
     }
 }
 

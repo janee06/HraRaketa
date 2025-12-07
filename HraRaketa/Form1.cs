@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Microsoft.Data.Sqlite;
 
 namespace HraRaketa
 {
@@ -20,10 +21,11 @@ namespace HraRaketa
         PictureBox[] srdce;
         Timer t = new Timer();
 
-        
+        // GUI prvky
         Button buttonStart;
         Button buttonStop;
         Button buttonReset;
+        Button buttonVysledky;
         TrackBar trackBarRychlost;
         ProgressBar progressBarPalivo;
         Label labelPalivo;
@@ -34,15 +36,17 @@ namespace HraRaketa
         public Form1()
         {
             InitializeComponent();
+            SQLitePCL.Batteries.Init();
+
             this.KeyPreview = true;
             this.KeyDown += Okno_KeyDown;
             this.KeyUp += Okno_KeyUp;
 
-            
+            // RAKETA
             pictureBox_raketa.Left = pozadi.Width / 2 - pictureBox_raketa.Width / 2;
             pictureBox_raketa.Top = pozadi.Height - pictureBox_raketa.Height - 10;
 
-            
+            // METEORITY
             PictureBox meteorit2 = new PictureBox();
             meteorit2.Size = meteorit.Size;
             meteorit2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -53,19 +57,39 @@ namespace HraRaketa
             foreach (var m in meteority)
                 ResetMeteorit(m);
 
-            
+            // SRDCE
             srdce = new PictureBox[] { pictureBoxzivoty1, pictureBoxzivoty2, pictureBoxzivoty3 };
 
-            
+            // TIMER
             t.Interval = 50;
             t.Tick += GameLoop;
 
-            
+            // ====== Vytvoření tabulky v DB ======
+            using (var conn = new SqliteConnection("Data Source=database.db"))
+            {
+                conn.Open();
+
+                string sql = @"CREATE TABLE IF NOT EXISTS ScoreLog(
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Jmeno TEXT,
+                    Skore INT,
+                    Zivoty INT,
+                    Palivo INT,
+                    Datum TEXT
+                )";
+
+                using (var cmd = new SqliteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            // ====== OVLÁDACÍ PANEL ======
             groupOvl = new GroupBox();
             groupOvl.Text = "🕹️ Ovládání";
             groupOvl.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             groupOvl.Width = 230;
-            groupOvl.Height = 320;
+            groupOvl.Height = 380;
             groupOvl.Left = pozadi.Right + 10;
             groupOvl.Top = 20;
             groupOvl.BackColor = Color.FromArgb(245, 245, 255);
@@ -74,50 +98,48 @@ namespace HraRaketa
             int left = 25;
             int width = 170;
 
-            
+            // START
             buttonStart = new Button();
             buttonStart.Text = "▶️ Start";
-            buttonStart.Top = 30;
+            buttonStart.Top = 80;
             buttonStart.Left = left;
             buttonStart.Width = width;
             buttonStart.BackColor = Color.LightGreen;
             buttonStart.Click += ButtonStart_Click;
             groupOvl.Controls.Add(buttonStart);
 
-            
+           
             buttonStop = new Button();
             buttonStop.Text = "⏸️ Stop";
-            buttonStop.Top = 70;
+            buttonStop.Top = 120;
             buttonStop.Left = left;
             buttonStop.Width = width;
             buttonStop.BackColor = Color.LightCoral;
             buttonStop.Click += ButtonStop_Click;
             groupOvl.Controls.Add(buttonStop);
 
-            
+           
             buttonReset = new Button();
             buttonReset.Text = "🔄 Reset";
-            buttonReset.Top = 110;
+            buttonReset.Top = 160;
             buttonReset.Left = left;
             buttonReset.Width = width;
             buttonReset.BackColor = Color.LightSteelBlue;
             buttonReset.Click += ButtonReset_Click;
             groupOvl.Controls.Add(buttonReset);
 
-            
+           
             labelRychlost = new Label();
             labelRychlost.Text = "🚀 Rychlost rakety:";
-            labelRychlost.Top = 150;
+            labelRychlost.Top = 200;
             labelRychlost.Left = left;
-            labelRychlost.Width = width;
             groupOvl.Controls.Add(labelRychlost);
 
-            
             trackBarRychlost = new TrackBar();
             trackBarRychlost.Minimum = 5;
             trackBarRychlost.Maximum = 20;
             trackBarRychlost.Value = raketaRychlost;
-            trackBarRychlost.Top = 170;
+            trackBarRychlost.Top = 220;
             trackBarRychlost.Left = left;
             trackBarRychlost.Width = width;
             trackBarRychlost.Scroll += TrackBarRychlost_Scroll;
@@ -126,33 +148,45 @@ namespace HraRaketa
             
             labelPalivo = new Label();
             labelPalivo.Text = "⛽ Palivo:";
-            labelPalivo.Top = 210;
+            labelPalivo.Top = 260;
             labelPalivo.Left = left;
-            labelPalivo.Width = width;
             groupOvl.Controls.Add(labelPalivo);
 
-            
             progressBarPalivo = new ProgressBar();
-            progressBarPalivo.Top = 230;
+            progressBarPalivo.Top = 280;
             progressBarPalivo.Left = left;
             progressBarPalivo.Width = width;
             progressBarPalivo.Maximum = 100;
             progressBarPalivo.Value = palivo;
-            progressBarPalivo.ForeColor = Color.LimeGreen;
             groupOvl.Controls.Add(progressBarPalivo);
 
-      
+            
             labelInfo = new Label();
             labelInfo.Font = new Font("Consolas", 10, FontStyle.Bold);
             labelInfo.ForeColor = Color.Navy;
-            labelInfo.Top = 265;
+            labelInfo.Top = 310;
             labelInfo.Left = left;
             labelInfo.Width = width + 20;
             labelInfo.Text = "Skóre: 0 | ❤️ 3 | Palivo: 100%";
             groupOvl.Controls.Add(labelInfo);
+
+         
+            buttonVysledky = new Button();
+            buttonVysledky.Text = "📊 Zobrazit výsledky";
+            buttonVysledky.Top = 340;
+            buttonVysledky.Left = left;
+            buttonVysledky.Width = width;
+            buttonVysledky.Click += ButtonZobrazVysledky;
+            groupOvl.Controls.Add(buttonVysledky);
         }
 
-        
+       
+        private void ButtonZobrazVysledky(object sender, EventArgs e)
+        {
+            FormSkore okno = new FormSkore();
+            okno.ShowDialog();
+        }
+
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             t.Start();
@@ -168,9 +202,10 @@ namespace HraRaketa
             skore = 0;
             zivoty = 3;
             palivo = 100;
+
             foreach (var m in meteority)
                 ResetMeteorit(m);
-            pictureBox_raketa.Left = pozadi.Width / 2 - pictureBox_raketa.Width / 2;
+
             progressBarPalivo.Value = palivo;
             labelInfo.Text = $"Skóre: {skore} | ❤️ {zivoty} | Palivo: {palivo}%";
             t.Start();
@@ -193,6 +228,7 @@ namespace HraRaketa
             if (e.KeyCode == Keys.Right) pohybVpravo = false;
         }
 
+        // ===== GAME LOOP =====
         private void GameLoop(object sender, EventArgs e)
         {
             if (pohybVlevo && pictureBox_raketa.Left > 0 && palivo > 0)
@@ -200,17 +236,18 @@ namespace HraRaketa
                 pictureBox_raketa.Left -= raketaRychlost;
                 palivo--;
             }
+
             if (pohybVpravo && pictureBox_raketa.Right < pozadi.Width && palivo > 0)
             {
                 pictureBox_raketa.Left += raketaRychlost;
                 palivo--;
             }
 
-            palivo = Math.Max(0, Math.Min(palivo, 100));
+            palivo = Math.Max(0, palivo);
             progressBarPalivo.Value = palivo;
 
-            for (int i = 0; i < meteority.Length; i++)
-                MoveMeteorit(meteority[i]);
+            foreach (var m in meteority)
+                MoveMeteorit(m);
 
             for (int i = 0; i < srdce.Length; i++)
                 srdce[i].Visible = (i < zivoty);
@@ -231,7 +268,8 @@ namespace HraRaketa
                 if (zivoty <= 0)
                 {
                     t.Stop();
-                    MessageBox.Show($"💥 Konec hry!\nSkóre: {skore}", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    UlozSkoreDoDatabaze();
+                    MessageBox.Show($"💥 Konec hry!\nSkóre: {skore}", "Game Over");
                 }
             }
 
@@ -248,9 +286,27 @@ namespace HraRaketa
             meteorit.Left = rnd.Next(0, pozadi.Width - meteorit.Width);
         }
 
-        private void txtscore_Click(object sender, EventArgs e)
+        // ===== ULOŽENÍ SKÓRE =====
+        private void UlozSkoreDoDatabaze()
         {
-            
+            using (var conn = new SqliteConnection("Data Source=database.db"))
+            {
+                conn.Open();
+
+                string sql = @"
+                INSERT INTO ScoreLog (Jmeno, Skore, Zivoty, Palivo, Datum)
+                VALUES (@j, @s, @z, @p, @d)";
+
+                using (var cmd = new SqliteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@j", textBoxJmeno.Text);
+                    cmd.Parameters.AddWithValue("@s", skore);
+                    cmd.Parameters.AddWithValue("@z", zivoty);
+                    cmd.Parameters.AddWithValue("@p", palivo);
+                    cmd.Parameters.AddWithValue("@d", DateTime.Now.ToString("dd.MM.yyyy HH:mm"));
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
